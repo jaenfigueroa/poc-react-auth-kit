@@ -1,6 +1,11 @@
+// import OtroComponente from './OtroComponente'
+
 const Footer = () => {
   return (
-    <footer>Footer</footer>
+    <footer>
+      Footer
+      {/* <OtroComponente/> */}
+    </footer>
   )
 }
 
