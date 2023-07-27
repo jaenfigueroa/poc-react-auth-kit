@@ -1,6 +1,8 @@
 const Admin = () => {
   return (
-    <main>Admin</main>
+    <main>
+      Pagina Admin
+    </main>
   )
 }
 

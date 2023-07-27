@@ -5,6 +5,9 @@ import NotFound from '../pages/NotFound'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
+import { RequireAuth } from 'react-auth-kit'
+import Login from '../pages/Login'
+
 export const AppRoutes = () => {
 
   return (
@@ -14,7 +17,16 @@ export const AppRoutes = () => {
       <Routes>
         <Route path='/' element={<Navigate to='/home' />} />
         <Route path='/home' element={<Home />} />
-        <Route path='/admin' element={<Admin />} />
+        <Route path='/login' element={<Login />} />
+
+        <Route
+          path='/admin'
+          element={
+            <RequireAuth loginPath='/login'>
+              <Admin />
+            </RequireAuth>
+          } />
+
         <Route path='*' element={<NotFound />} />
       </Routes>
 
