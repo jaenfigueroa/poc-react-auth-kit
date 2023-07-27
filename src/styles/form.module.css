@@ -1,0 +1,13 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  background: rgb(222, 222, 222);
+  padding: 1rem;
+  border-radius: 0.25rem;
+  gap: 1rem;
+}
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}

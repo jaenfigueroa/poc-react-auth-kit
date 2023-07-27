@@ -1,18 +1,21 @@
-import styles from '../styles/card.module.css'
+import CardUser from '../components/CardUser'
 import {useAuthUser} from 'react-auth-kit'
 
 const Admin = () => {
   const auth = useAuthUser()
+  const user = auth()
 
   return (
     <main>
       Pagina Admin
 
-      {/* CARD QUE SOLO SE ENCARGA DE MOSTRAR LA INFORMACION */}
-      <article className={styles.card}>
-        <p><span className={styles.label}>Nombre</span>: {auth()?.name}</p>
-        <p><span className={styles.label}>Correo</span>: {auth()?.email}</p>
-      </article>
+      {user && <CardUser
+        name={user.name}
+        lastname={user.lastname}
+        age={user.age}
+        email={user.email}
+        avatar={user.avatar}
+      />}
     </main>
   )
 }

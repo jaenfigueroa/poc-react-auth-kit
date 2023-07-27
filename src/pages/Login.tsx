@@ -1,44 +1,47 @@
 import { useSignIn } from 'react-auth-kit'
 import { useNavigate } from 'react-router-dom'
-import styles from '../styles/login.module.css'
+import { login } from '../auth/login'
+import stylesLogin from '../styles/login.module.css'
+import stylesForm from '../styles/form.module.css'
 
 const Login = () => {
   const navigate = useNavigate()
   const signIn = useSignIn()
 
-  const onSubmit = () => {
-    //...
-
-    // Llamar a tu función de inicio de sesión (login) aquí
-    // const res = await login(email, password);
+  const onSubmit = async () => {
+    const res = await login({ email: 'jaen@gmail.com', password: 'password_12345' })
 
     if (
       signIn({
-        token: 'token-de-prueba-del-servidor', //res.data.token // El token de autenticación (JWT) que se almacenará desde el servidor
+        token: res.data.token, // El token de autenticación (JWT) que se almacenará desde el servidor
         tokenType: 'Bearer', // El tipo de token de autenticación.
-        expiresIn: 1,//res.data.expiresIn //El tiempo que durará el token de autenticación, en minutos
-        authState: {name: 'Jaen', email: 'jaenfigueroa@gmail.com'}, //res.data.authUserState //Estado del usuario autorizado
-
-        // refreshToken: res.data.refreshToken,                    // Only if you are using refreshToken feature
-        // refreshTokenExpireIn: res.data.refreshTokenExpireIn     // Only if you are using refreshToken feature
+        expiresIn: res.data.expiresIn, //El tiempo que durará el token de autenticación, en minutos
+        authState: res.data.authUserState , //Estado del usuario autorizado
       })
     ) {
       // Redirigir o hacer algo
-      console.log('rederigido a la ruta con acceso')
       navigate('/admin')
     }else {
-      //Lanzar error
-      console.log('error, no autenticado correctamente')
+      throw new Error('error, usuario no autenticado correctamente')
     }
   }
 
   return (
-    <main className={styles.login}>
+    <main className={stylesLogin.login}>
       Pagina Login
 
-      <button onClick={onSubmit}>
-        Iniciar sesion
-      </button>
+      <form className={stylesForm.form}>
+        <label className={stylesForm.label}> Correo:
+          <input type='email' name='email' required />
+        </label>
+        <label className={stylesForm.label}> Contraseña:
+          <input type='password' name='password' required/>
+        </label>
+        <button type='submit' onClick={onSubmit}>
+          Iniciar sesion
+        </button>
+      </form>
+
     </main>
   )
 }
