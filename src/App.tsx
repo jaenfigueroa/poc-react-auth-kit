@@ -9,8 +9,6 @@ function App() {
     <AuthProvider
       authType='localstorage'
       authName='_auth'
-      cookieDomain={window.location.hostname}
-      cookieSecure={window.location.protocol === 'https:'}
     >
       <AppRoutes/>
     </AuthProvider>

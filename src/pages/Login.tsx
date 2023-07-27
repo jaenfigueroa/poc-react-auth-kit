@@ -1,6 +1,6 @@
 import { useSignIn } from 'react-auth-kit'
 import { useNavigate } from 'react-router-dom'
-import { fetchLogin } from '../auth/login'
+import fetchLogin from '../auth/fetchLogin'
 import stylesLogin from '../styles/login.module.css'
 import stylesForm from '../styles/form.module.css'
 
@@ -8,7 +8,8 @@ const Login = () => {
   const navigate = useNavigate()
   const signIn = useSignIn()
 
-  const onSubmit = async () => {
+  const onSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     const res = await fetchLogin({ email: 'jaenfigueroa@gmail.com', password: 'password_12345' })
 
     if (
@@ -30,10 +31,10 @@ const Login = () => {
     <main className={stylesLogin.login}>
       Pagina Login
 
-      <form className={stylesForm.form}>
-        <input type='email' name='email' placeholder='Correo' required />
-        <input type='password' name='password' placeholder='Contraseña' required/>
-        <button type='submit' onClick={onSubmit}>Iniciar sesion</button>
+      <form className={stylesForm.form} onSubmit={onSubmit}>
+        <input type='email' placeholder='Correo' />
+        <input type='password' placeholder='Contraseña'/>
+        <button type='submit'>Iniciar sesion</button>
       </form>
 
     </main>
