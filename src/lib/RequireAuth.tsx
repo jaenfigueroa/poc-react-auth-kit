@@ -1,36 +1,24 @@
-import { PropsWithChildren, useEffect, useState } from 'react'
+import { useEffect, PropsWithChildren } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useIsAuthenticated } from 'react-auth-kit'
-import { Navigate, useNavigate } from 'react-router-dom'
 
 type RequireAuthProps = {
   loginPath: string
 }
 
 const RequireAuth = ({ loginPath, children }:PropsWithChildren<RequireAuthProps>) => {
-  const isAuthenticated = useIsAuthenticated()
-  const [authChecked, setAuthChecked] = useState(false)
-
   const navigate = useNavigate()
+  const isAuthenticated = useIsAuthenticated()
 
   useEffect(() => {
-    const authenticated = isAuthenticated() // Debes implementar esta función según tus necesidades.
-
-    setAuthChecked(true)
+    const authenticated = isAuthenticated()
 
     if (!authenticated) {
-      navigate('/login')
+      navigate(loginPath)
     }
-  }, [navigate, isAuthenticated])
+  }, [navigate, isAuthenticated, loginPath])
 
-  if (!authChecked) {
-    return <div>Loading...</div>
-  }
-
-  if (isAuthenticated()) {
-    return children
-  }
-
-  return <Navigate to={loginPath} />
+  return children
 }
 
 export default RequireAuth

@@ -1,6 +1,6 @@
 import { LoginProps, LoginResponse } from '../types'
 
-export const login = async({ email,password}: LoginProps):Promise<LoginResponse> => {
+export const fetchLogin = async({ email,password}: LoginProps):Promise<LoginResponse> => {
   try {
     const response = await fetch('http://www.server.com/api/user', {
       method: 'POST',
