@@ -1,13 +1,9 @@
-import { LoginProps, LoginResponse } from '../types'
+import { LoginResponse } from '../types'
 
-const fetchLogin = async({ email,password}: LoginProps):Promise<LoginResponse> => {
+const fetchLogin = async():Promise<LoginResponse> => {
   try {
     const response = await fetch('http://www.server.com/api/user', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
     })
     return response.json()
 

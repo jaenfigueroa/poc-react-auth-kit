@@ -10,17 +10,21 @@ const Login = () => {
 
   const onSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const res = await fetchLogin({ email: 'jaenfigueroa@gmail.com', password: 'password_12345' })
+    // Aquí se debe hacer la petición al servidor para autenticar al usuario
+    // enviar el correo y la contraseña, asi recibir el token de autenticación y demas data que usara react-auth-kit
+    const { data } = await fetchLogin()
 
-    if (
-      signIn({
-        token: res.data.token, // El token de autenticación (JWT) que se almacenará desde el servidor
-        tokenType: 'Bearer', // El tipo de token de autenticación.
-        expiresIn: res.data.expiresIn, //El tiempo que durará el token de autenticación, en minutos
-        authState: res.data.authUserState , //Estado del usuario autorizado
-      })
-    ) {
-      // Redirigir o hacer algo
+    // react-auth-kit almacena el token de autenticación y demas data en localStorage
+    const isUserLoged = signIn({
+      token: data.token, // El token de autenticación (JWT) que se almacenará desde el servidor
+      tokenType: 'Bearer', // El tipo de token de autenticación.
+      expiresIn: data.expiresIn, //El tiempo que durará el token de autenticación, en minutos
+      authState: data.authUserState , //Estado del usuario autorizado
+    })
+
+    // Si el usuario se autentica correctamente, se redirecciona a la página de administración
+    // de lo contrario, se muestraria un error en el formulario de inicio de sesión
+    if (isUserLoged) {
       navigate('/admin')
     }else {
       throw new Error('error, usuario no autenticado correctamente')
