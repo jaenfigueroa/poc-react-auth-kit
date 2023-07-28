@@ -11,9 +11,7 @@ const RequireAuth = ({ loginPath, children }:PropsWithChildren<RequireAuthProps>
   const isAuthenticated = useIsAuthenticated()
 
   useEffect(() => {
-    const authenticated = isAuthenticated()
-
-    if (!authenticated) {
+    if (!isAuthenticated()) {
       navigate(loginPath)
     }
   }, [navigate, isAuthenticated, loginPath])
